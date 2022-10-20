@@ -4,7 +4,7 @@
 ### Symfony ###
 
 
-*   **Artscapy dev team has more experience with Symfony (very important)**
+*   **Artscapy dev team has more experience with Symfony**
     
 *   Highly flexible/configurable and more decoupled (e.g. easier to switch to a different database or framework)
     
@@ -17,6 +17,8 @@
 *   Great documentation & learning resources & support (symfony casts, Symfony Slack, Github)
 
 *   EasyAdmin for admin panel
+
+*   Front-end support via Encore (React, Vue, vanilla JS)
     
     
 ### Laravel ###
@@ -30,10 +32,12 @@
 *   Great documentation & learning resources & support (laracasts, Laravel Slack, Github)
 
 *   Laravel Nova for admin panel
+
+*   Front-end support via Laravel mix (React, Vue, vanilla JS)
     
   -------------------------------------------------------------------
 
-\*1 Laravel can also use DI via constructor but it seems everywhere in the docs they use Facades and global helper functions which means it’s the recommended way. Using facades makes core business logic code tightly coupled to the framework, it makes it harder to swap and understand what what depencencies a class has and it relies on correctness of phpdoc bloc to perform static analysis or debugging.
+\*1 Laravel can also use DI via constructor but it seems everywhere in the docs they use Facades and global helper functions which means it’s the recommended way. Using facades makes core business logic code tightly coupled to the framework, it makes it harder to swap and understand what depencencies a class has and it relies on correctness of phpdoc bloc to perform static analysis and/or debugging.
 
   
 
@@ -46,6 +50,8 @@ class OrderProcessor {
     private MailerInterface $mailer,
     private ModelManagerInterface $modelManager,
     private TemplateBuilder $templateBuilder,
+    private ValidatorInterface $validator,
+    private RouterInterface $router,
   ) 
   {}
 
@@ -55,11 +61,29 @@ class OrderProcessor {
 
     $this->mailer->sendOrderConfirmation($order);
 
-    return $this->templateBuilder->render('templates/order\_processed.html');
+    return $this->templateBuilder->render('templates/order_processed.html');
   }
+  
+  public function doSomethingElse(): Response
+  {
+    $validator = $this->validator->make([
+        'name' => 'required|max:255',
+    ]);
+ 
+    if ($validator->fails()) {
+        return $this->router->redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+ 
+    return $this->templateBuilder->render('templates/do_something_else.html');
+   }
 
 }
 ```
+
+**Laravel Example:**
+
 ```php
 class OrderProcessor {
 
@@ -69,8 +93,23 @@ class OrderProcessor {
 
     Mailer::sendOrderConfirmation($order);
     
-    return view('templates/order\_processed.html');
+    return view('templates/order_processed.html');
   }
+  
+  public function doSomethingElse(): Response
+  {
+    $validator = Validator::make([
+        'name' => 'required|max:255',
+    ]);
+ 
+    if ($validator->fails()) {
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+ 
+    return view('templates/do_something_else.html');
+   }
 
 }
 ```
