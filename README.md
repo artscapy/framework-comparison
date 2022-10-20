@@ -10,7 +10,7 @@
     
 *   Dependency injection via constructor is the only way to provide depencencies to a class \*1
     
-*   API Platform (extension which allows rapid REST/GraphQL API development)
+*   API Platform (extension which allows rapid REST/GraphQL API development and automatically generates OpenApi/Swagger documentation just by analysing your code)
     
 *   Model/Entity object generally don’t exdend any other class and thus are lightweight and can be serialized when required (e.g. when storing in database for queued job worker to process in the background)
 
