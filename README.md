@@ -49,8 +49,6 @@ class OrderProcessor {
   ) 
   {}
 
-  
-
   public function processOrder(string $orderId): Response
   {
     $order = $this->modelManager->findOrderById($orderId);
