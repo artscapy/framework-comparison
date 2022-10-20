@@ -27,7 +27,7 @@
     
 *   Is less flexible/configurable and therefore easier to learn
 
-*   Great documentation & learning resources & support (laracasts, Symfony Slack, Github)
+*   Great documentation & learning resources & support (laracasts, Laravel Slack, Github)
 
 *   Laravel Nova for admin panel
     
