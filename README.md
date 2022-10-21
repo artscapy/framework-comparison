@@ -4,7 +4,7 @@
 ### Symfony ###
 
 
-*   **Artscapy dev team has more experience with Symfony**
+*   *Artscapy dev team has more experience with Symfony*
     
 *   Highly flexible/configurable and more decoupled (e.g. easier to switch to a different database or framework)
     
